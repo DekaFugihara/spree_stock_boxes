@@ -1,0 +1,29 @@
+<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  Peças na Caixa #<%= @stock_box.number %>
+<% end %>
+
+<%= image_tag @barcode_path %>
+
+<table>
+  <thead><tr>
+    <th>SKU</th>
+    <th>Nome</th>
+		<th>Estoque</th>
+  </tr></thead>
+
+	<% @variants.each do |variant| %>
+	<tbody>
+	  <tr>
+	    <td><%= variant.sku %></td>
+	    <td><%= link_to variant.name, admin_product_path(variant.product), target: "_blank" %></td>
+			<td><%= variant.count_on_hand %></td>
+	  </tr>
+	</tbody>
+	<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Voltar', admin_stock_boxes_path %>

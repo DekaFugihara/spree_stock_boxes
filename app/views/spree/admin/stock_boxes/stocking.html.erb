@@ -1,0 +1,58 @@
+<% content_for :page_actions do %>
+  <li><%= button_link_to t(:back), admin_orders_path, :icon => 'icon-arrow-left' %></li>
+<% end %>
+	
+<% content_for :page_title do %>
+  Armazenamento de peças no estoque
+<% end %>	
+	
+<div id="stocking-page">
+
+		<div class="form-row clearfix" id="field1">
+			<h6>Escaneie a caixa desejada</h6>
+			<%= form_tag(stocking_check_admin_stock_boxes_path, method: :post) do %>		
+				<%= hidden_field_tag 'field_action', 'open' %>
+				<%= text_field_tag 'box_number', '', placeholder: 'Número da caixa' %>
+				<span class="check"></span>
+			<% end %>
+		</div>
+
+		<div class="form-row clearfix" id="field2" style="display:none;">
+			<h6>Escaneie as peças a serem guardadas</h6>
+			<%= form_tag(stocking_check_admin_stock_boxes_path, method: :post) do %>	
+				<%= hidden_field_tag 'field_action', 'insert' %>
+				<%= hidden_field_tag 'box_number', '', class: "box" %>
+				<%= hidden_field_tag 'registered_items', '', class: "registered_items" %>
+				<%= hidden_field_tag 'box_number', '', class: "box" %>
+				<%= text_area_tag 'stock_items', '', rows: 10, cols: 50, placeholder: 'SKU das peças a serem armazenadas' %>
+				<span class="check"></span>
+			<% end %>
+		</div>
+		
+		<div class="form-row clearfix" id="field3" style="display:none;">
+			<%= form_tag(stocking_check_admin_stock_boxes_path, method: :post) do %>
+				<%= hidden_field_tag 'field_action', 'close' %>
+				<%= hidden_field_tag 'box_number', '', class: "box" %>
+				<%= hidden_field_tag 'registered_items', '', class: "registered_items" %>
+				<span class="check"></span>
+			<% end %>	
+		</div>
+		
+		<div class="form-row clearfix" id="next-box" style="display:none;">
+			<h6 class="form-row clearfix">Caixa fechada!</h6>
+			<%= button_link_to "Próxima caixa", "/admin/stocking" %>
+		</div>
+			
+</div>
+
+<script>
+	$(document).ready(function() {
+		
+		$("#field1 #stock_box_number").focus();
+		
+		$("form").live("change", function(){
+			$.post($(this).attr('action'), $(this).serialize(), null, "script");
+		});
+		
+	});
+</script>

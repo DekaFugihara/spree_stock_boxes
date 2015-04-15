@@ -1,0 +1,37 @@
+<%= form_for([:admin, @stock_box]) do |f| %>
+  <% if @stock_box.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@stock_box.errors.count, "error") %> prohibited this stock_box from being saved:</h2>
+
+      <ul>
+      <% @stock_box.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :number %><br />
+    <%= f.text_field :number %>
+  </div>
+  <div class="field">
+    <%= f.label :positionX %><br />
+    <%= f.text_field :positionX %>
+  </div>
+  <div class="field">
+    <%= f.label :positionY %><br />
+    <%= f.text_field :positionY %>
+  </div>
+  <div class="field">
+    <%= f.label :positionZ %><br />
+    <%= f.text_field :positionZ %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br />
+    <%= f.number_field :quantity %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

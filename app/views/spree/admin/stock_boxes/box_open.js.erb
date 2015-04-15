@@ -1,0 +1,8 @@
+<% if @box %>
+	$(".box").val("<%= @box.number %>");
+	$("#field1 .check").html("<img src='/assets/admin/ok.png'>");
+	$("#field2").show();
+	$("#field2 #stock_items").focus();
+<% else %>
+	$("#field1 .check").html("<img src='/assets/admin/not.png'>");
+<% end %>

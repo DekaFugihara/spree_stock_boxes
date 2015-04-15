@@ -1,0 +1,9 @@
+<% if @check_message > 1 %>
+	$(".registered_items").val("<%= @new_value %>");
+	$("#field2 .check").html("<img src='/assets/admin/ok.png'>");
+<% else %>
+	alert("Produto indisponível!");
+	$("#field2 .check").html("<img src='/assets/admin/not.png'>");
+<% end %>
+$("#stock_items").val("<%= @new_value %>");
+$("#stock_items").focus();
