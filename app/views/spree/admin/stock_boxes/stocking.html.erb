@@ -14,6 +14,8 @@
 				<%= hidden_field_tag 'field_action', 'open' %>
 				<%= text_field_tag 'box_number', '', placeholder: 'Número da caixa' %>
 				<span class="check"></span>
+				<br /><br />
+				<%= submit_tag("Não me clique") %>
 			<% end %>
 		</div>
 
@@ -26,6 +28,8 @@
 				<%= hidden_field_tag 'box_number', '', class: "box" %>
 				<%= text_area_tag 'stock_items', '', rows: 10, cols: 50, placeholder: 'SKU das peças a serem armazenadas' %>
 				<span class="check"></span>
+				<br /><br />
+				<%= submit_tag("Não me clique") %>
 			<% end %>
 		</div>
 		

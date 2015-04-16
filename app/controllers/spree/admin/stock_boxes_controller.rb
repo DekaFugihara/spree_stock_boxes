@@ -118,7 +118,6 @@ module Spree
           new_item = params[:stock_items].split(",").last.squish
           box_number = params[:box_number]
           @new_value = registered_items
-          puts "AAAAAAAAAAAA: /#{new_item}/ x /#{box_number}/"
           if new_item == box_number
             respond_to do |format|
               format.js { render "box_close" }
