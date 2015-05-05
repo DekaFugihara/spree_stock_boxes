@@ -125,7 +125,15 @@ module Spree
           else      
             variant = Spree::Variant.find_by_sku(new_item)
             if variant
-              @check_message = variant.count_on_hand == 0 ? 1 : 2
+              @check_message = 2
+              if variant.count_on_hand == 0
+                @check_message = 4
+                order = variant.product.order
+                shipment = order ? order.shipment : nil
+                if shipment && shipment.state == "shipped"
+                  @check_message = 1
+                end
+              end
             else
               name = "Produto em processo de cadastramento"
               p = Spree::Product.new(sku: new_item, price: 0, on_hand: 0, name: name, permalink: name.to_url)
