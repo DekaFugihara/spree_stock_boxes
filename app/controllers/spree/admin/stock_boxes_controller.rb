@@ -130,8 +130,8 @@ module Spree
                 @check_message = 4
                 order = variant.product.order
                 shipment = order ? order.shipment : nil
-                if shipment && shipment.state == "shipped"
-                  @check_message = 1
+                if shipment
+                  @check_message = 1 if shipment.state == "shipped" || shipment.state == "ready"
                 end
               end
             else
