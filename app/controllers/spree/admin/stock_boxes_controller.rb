@@ -122,7 +122,7 @@ module Spree
             respond_to do |format|
               format.js { render "box_close" }
             end      
-          else      
+          else
             variant = Spree::Variant.find_by_sku(new_item)
             if variant
               @check_message = 2
@@ -144,6 +144,7 @@ module Spree
             if @check_message > 1
               new_value = [registered_items, new_item, ","] - [""]
               @new_value = new_value.join("") if new_value
+              @new_image = variant.product.images.first.attachment.url(:product)
             end
             
             respond_to do |format|
