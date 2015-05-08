@@ -147,9 +147,13 @@ module Spree
               @new_value = new_value.join("") if new_value
             end
 
-            unless variant.product.images.empty?
-              if variant.product.images.first.attachment
-                @new_image = variant.product.images.first.attachment.url(:product)
+            if variant.product
+              if variant.product.images
+                unless variant.product.images.empty?
+                  if variant.product.images.first.attachment
+                    @new_image = variant.product.images.first.attachment.url(:product)
+                  end
+                end
               end
             end
             
