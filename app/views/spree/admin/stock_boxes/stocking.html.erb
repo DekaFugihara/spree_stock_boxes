@@ -55,7 +55,7 @@
 <script>
 	$(document).ready(function() {
 		
-		$("#field1 #stock_box_number").focus();
+		$("#field1 #box_number").focus();
 		
 		$("form").live("change", function(){
 			$.post($(this).attr('action'), $(this).serialize(), null, "script");
