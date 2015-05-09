@@ -6,10 +6,10 @@
 	$("#field2 .check").html("<img src='/assets/admin/not.png'>");
 <% end %>
 
-<% if @new_image == nil %>
-  $("#show-last-item").html("<h1 style='text-align:center;margin-top:150px;font-size:3em;'>SEM IMAGEM</h1>");
+<% if @new_image %>
+	$("#show-last-item").html("<img src='<%= @new_image %>' />");
 <% else %>
-  $("#show-last-item").html("<img src='<%= @new_image %>' />");
+  $("#show-last-item").html("<h1 style='text-align:center;margin-top:150px;font-size:3em;'>SEM IMAGEM</h1>");
 <% end %>
 
 $("#stock_items").val("<%= @new_value %>");
