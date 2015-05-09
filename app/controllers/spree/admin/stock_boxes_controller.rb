@@ -114,6 +114,7 @@ module Spree
         if params[:field_action] == "insert"
           check = "insert"
           
+          @new_image = nil
           registered_items = params[:registered_items]
           new_item = params[:stock_items].split(",").last.squish
           box_number = params[:box_number]
@@ -144,7 +145,16 @@ module Spree
             if @check_message > 1
               new_value = [registered_items, new_item, ","] - [""]
               @new_value = new_value.join("") if new_value
-              @new_image = variant.product.images.first.attachment.url(:product)
+            end
+
+            if variant.product
+              if variant.product.images
+                unless variant.product.images.empty?
+                  if variant.product.images.first.attachment
+                    @new_image = variant.product.images.first.attachment.url(:product)
+                  end
+                end
+              end
             end
             
             respond_to do |format|
