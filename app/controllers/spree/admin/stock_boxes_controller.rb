@@ -116,8 +116,8 @@ module Spree
           
           @new_image = nil
           registered_items = params[:registered_items]
-          new_item = params[:stock_items].split(",").last.squish
-          box_number = params[:box_number]
+          new_item = params[:stock_items].split(",").last.squish.downcase
+          box_number = params[:box_number].downcase
           @new_value = registered_items
           if new_item == box_number
             respond_to do |format|
