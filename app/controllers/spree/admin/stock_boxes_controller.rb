@@ -123,7 +123,7 @@ module Spree
             respond_to do |format|
               format.js { render "box_close" }
             end      
-          else
+          elsif new_item.to_i > 10000000000 and new_item.to_i < 20000000000 and new_item.to_i.to_s == new_item
             variant = Spree::Variant.find_by_sku(new_item)
             if variant
               @check_message = 2
@@ -159,7 +159,13 @@ module Spree
             
             respond_to do |format|
               format.js { render "box_insert" }
-            end               
+            end  
+          else
+            @old_value = registered_items
+            @last_entry = new_item
+            respond_to do |format|
+              format.js { render "box_insert_error" }
+            end   
           end
           
         end
