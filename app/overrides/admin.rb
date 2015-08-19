@@ -9,5 +9,5 @@ Deface::Override.new(:virtual_path => 'spree/admin/products/_form',
                      :name => 'insert_product_box',
                      :insert_before => 'ul#shipping_specs',
                      :text => '<li id="shipping_specs_dimensions_field" class="field alpha four columns">
-                               <%= f.label :stock_box, "Caixa do estoque" %>
-                               <%= f.text_field :stock_box_id, :size => 8 %></li>')
+                               <%= f.label :stock_box_number, "Caixa do estoque" %>
+                               <%= f.text_field :stock_box_number, :size => 8 %></li>')
