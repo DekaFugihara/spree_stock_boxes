@@ -7,7 +7,14 @@
 <% end %>
 
 <% if @new_image == nil %>
-  $("#show-last-item").html("<h1 style='text-align:center;margin-top:150px;font-size:3em;'>SEM IMAGEM</h1>");
+  message = "<h1 style='text-align:center;margin-top:150px;font-size:3em;'>";
+  message += "SEM IMAGEM<br />";
+  message += "<span class='green'><%= @last_entry %></span>";
+  <% if @check_message == 3 %>
+  message += "<br /><span style='font-size:0.5em'>Item não cadastrado</span>";
+  <% end %>
+  message += "</h1>";
+  $("#show-last-item").html(message);
 <% else %>
   $("#show-last-item").html("<img src='<%= @new_image %>' />");
 <% end %>

@@ -117,6 +117,7 @@ module Spree
           @new_image = nil
           registered_items = params[:registered_items]
           new_item = params[:stock_items].split(",").last.squish
+          @last_entry = new_item
           box_number = params[:box_number]
           @new_value = registered_items
           if new_item == box_number
@@ -147,12 +148,10 @@ module Spree
               @new_value = new_value.join("") if new_value
             end
 
-            if variant.product
-              if variant.product.images
-                unless variant.product.images.empty?
-                  if variant.product.images.first.attachment
-                    @new_image = variant.product.images.first.attachment.url(:product)
-                  end
+            if variant and variant.product and variant.product.images
+              unless variant.product.images.empty?
+                if variant.product.images.first.attachment
+                  @new_image = variant.product.images.first.attachment.url(:product)
                 end
               end
             end
@@ -162,7 +161,6 @@ module Spree
             end  
           else
             @old_value = registered_items
-            @last_entry = new_item
             respond_to do |format|
               format.js { render "box_insert_error" }
             end   
