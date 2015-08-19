@@ -116,15 +116,18 @@ module Spree
           
           @new_image = nil
           registered_items = params[:registered_items]
-          new_item = params[:stock_items].split(",").last.squish
+
+          new_item = params[:stock_items].split(",").last.squish.downcase
           @last_entry = new_item
-          box_number = params[:box_number]
+          box_number = params[:box_number].downcase
+
           @new_value = registered_items
           if new_item == box_number
             respond_to do |format|
               format.js { render "box_close" }
-            end      
+            end
           elsif new_item.to_i > 10000000000 and new_item.to_i < 20000000000 and new_item.to_i.to_s == new_item
+
             variant = Spree::Variant.find_by_sku(new_item)
             if variant
               @check_message = 2
@@ -148,12 +151,11 @@ module Spree
               @new_value = new_value.join("") if new_value
             end
 
-            if variant and variant.product and variant.product.images
-              unless variant.product.images.empty?
-                if variant.product.images.first.attachment
-                  @new_image = variant.product.images.first.attachment.url(:product)
-                end
-              end
+            product = variant.product if variant
+            images = product.images if product
+            if images && !images.empty?
+              attachment = images.first.attachment     
+              @new_image = attachment.url(:product) if attachment
             end
             
             respond_to do |format|

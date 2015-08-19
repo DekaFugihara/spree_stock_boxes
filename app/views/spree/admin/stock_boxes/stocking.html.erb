@@ -54,14 +54,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		
-		$("#field1 #stock_box_number").focus();
-	
-	});
+		$("#field1 #box_number").focus();
 
-	$("form").on("change", function(){
+		$("form").on("change", function(){
 			$.post($(this).attr('action'), $(this).serialize(), null, "script");
 		});
+			
 
 		$("input[type=submit]").on("click", function(e){
 			e.preventDefault();
@@ -69,5 +67,9 @@
 			var form = $(this).closest("form");
 			$.post($(form).attr('action'), $(form).serialize(), null, "script");
 		});
+	});
+
+	
+
 	
 </script>
