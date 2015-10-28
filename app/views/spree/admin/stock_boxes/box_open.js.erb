@@ -3,7 +3,9 @@
 	$("#field1 .check").html("<img src='/assets/admin/ok.png'>");
 	$("#field2").show();
 	$("#field2 #stock_items").focus();
+  $("#show-last-item").html('');
 <% else %>
 	$("#field1 .check").html("<img src='/assets/admin/not.png'>");
 	$("#field1 #box_number").select().focus();
+  $("#show-last-item").html('');
 <% end %>

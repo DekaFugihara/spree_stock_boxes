@@ -19,5 +19,8 @@
   $("#show-last-item").html(message);
 <% end %>
 
-$("#stock_items").val("<%= @new_value %>");
-$("#stock_items").focus();
+
+setTimeout(function() {
+  $("#stock_items").val("<%= @new_value %>");
+  $("#stock_items").focus();
+}, 0);

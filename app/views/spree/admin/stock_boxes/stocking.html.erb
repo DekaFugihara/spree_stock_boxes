@@ -13,7 +13,7 @@
 			<%= form_tag(stocking_check_admin_stock_boxes_path, method: :post) do %>		
 				<%= hidden_field_tag 'field_action', 'open' %>
 				<%= text_field_tag 'box_number', '', placeholder: 'Número da caixa' %>
-				<span class="check"></span>
+				<span class="check"><%= image_tag "/assets/admin/loading.gif", size: "32x32" %></span>
 				<br /><br />
 				<%= submit_tag("Não me clique") %>
 			<% end %>
@@ -53,23 +53,24 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#field1 #box_number").focus();
+console.log("ALL READY!");
 
-		$("form").on("change", function(){
-			$.post($(this).attr('action'), $(this).serialize(), null, "script");
-		});
-			
+$("#box_number").focus();
+$("#field1 .check").html('');
 
-		$("input[type=submit]").on("click", function(e){
-			e.preventDefault();
-			console.log("aaa");
-			var form = $(this).closest("form");
-			$.post($(form).attr('action'), $(form).serialize(), null, "script");
-		});
-	});
 
+$("form").live("change", function(){
+	console.log("Form changed");
+	$("#show-last-item").html('<%= image_tag "/assets/admin/loading.gif", size: "29x29" %>');
+	$.post($(this).attr('action'), $(this).serialize(), null, "script");
+});
 	
 
-	
+$("input[type=submit]").live("click", function(e){
+	e.preventDefault();
+	console.log("Submited form");
+	var form = $(this).closest("form");
+	$.post($(form).attr('action'), $(form).serialize(), null, "script");
+
+});	
 </script>
