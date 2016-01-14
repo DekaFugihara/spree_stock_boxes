@@ -12,9 +12,9 @@ module Spree
         if params[:non_empty]
           @stock_boxes = StockBox.all
         elsif params[:p_first]
-          @stock_boxes = StockBox.find(:all, order: "quantity")
+          @stock_boxes = StockBox.find(:all, order: "quantity").reverse
         elsif params[:p_last]
-           @stock_boxes = StockBox.find(:all, order: "quantity").reverse
+           @stock_boxes = StockBox.find(:all, order: "quantity")
         else
           @stock_boxes = StockBox.where("quantity > ?", 0).order("quantity ASC")
         end
@@ -29,6 +29,7 @@ module Spree
       def show
         @stock_box = StockBox.find(params[:id])
         @variants = @stock_box.variants
+        @variants = @variants.sort { |v| v.count_on_hand }
         
         @barcode_path = "/tmp/barcode_stockbox_#{@stock_box.number}.png"
         unless FileTest.exist?("#{Rails.root}/public#{@barcode_path}")
