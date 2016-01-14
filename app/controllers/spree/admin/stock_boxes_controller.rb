@@ -28,7 +28,7 @@ module Spree
       # GET /stock_boxes/1.json
       def show
         @stock_box = StockBox.find(params[:id])
-        @variants = @stock_box.variants.sort_by { |v| [v.count_on_hand, v.sku * -1] }.reverse
+        @variants = @stock_box.variants.sort_by { |v| [v.count_on_hand, v.sku] }.reverse
 
         @barcode_path = "/tmp/barcode_stockbox_#{@stock_box.number}.png"
         unless FileTest.exist?("#{Rails.root}/public#{@barcode_path}")
