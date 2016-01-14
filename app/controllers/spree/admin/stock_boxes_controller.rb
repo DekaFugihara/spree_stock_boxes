@@ -28,9 +28,8 @@ module Spree
       # GET /stock_boxes/1.json
       def show
         @stock_box = StockBox.find(params[:id])
-        @variants = @stock_box.variants
-        @variants = @variants.sort { |v1, v2| v1.count_on_hand <=> v2.count_on_hand }
-        
+        @variants = @stock_box.variants.sort_by { |v| [v.count_on_hand, v.sku] }
+
         @barcode_path = "/tmp/barcode_stockbox_#{@stock_box.number}.png"
         unless FileTest.exist?("#{Rails.root}/public#{@barcode_path}")
           barcode = Barby::Code128A.new(@stock_box.number)
