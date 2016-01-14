@@ -13,7 +13,7 @@ module Spree
           @stock_boxes = StockBox.all
         elsif params[:p_first]
           @stock_boxes = StockBox.all.order("quantity DESC")
-        elsif params[:]
+        elsif params[:p_last]
           @stock_boxes = StockBox.all.order("quantity ASC")
         else
           @stock_boxes = StockBox.where("quantity > ?", 0).order("quantity DESC")
