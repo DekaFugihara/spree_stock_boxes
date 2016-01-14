@@ -9,21 +9,15 @@ module Spree
       # GET /stock_boxes
       # GET /stock_boxes.json
       def index
-        if params
-          if params[:non_empty]
-            @stock_boxes = StockBox.all
-          else
-            @stock_boxes = StockBox.all
-            if params[:p_first]
-              @stock_boxes = StockBox.where("quantity > -1 ORDER BY quantity DESC")
-            else
-              @stock_boxes = StockBox.where("quantity > -1 ORDER BY quantity ASC")
-            end
-          end
+        if params[:non_empty]
+          @stock_boxes = StockBox.all
+        elsif params[:p_first]
+          @stock_boxes = StockBox.all.order("quantity DESC")
+        elsif params[:]
+          @stock_boxes = StockBox.all.order("quantity ASC")
         else
-          @stock_boxes = StockBox.where("quantity > 0 ORDER BY quantity ASC")
+          @stock_boxes = StockBox.where("quantity > ?", 0).order("quantity DESC")
         end
-
         respond_to do |format|
           format.html # index.html.erb
           format.json { render json: @stock_boxes }
