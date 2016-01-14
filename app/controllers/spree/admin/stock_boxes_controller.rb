@@ -12,9 +12,9 @@ module Spree
         if params[:non_empty]
           @stock_boxes = StockBox.all
         elsif params[:p_first]
-          @stock_boxes = StockBox.all.sort { |box1, box2| box1.quantity <=> box2.quantity}
+          @stock_boxes = StockBox.order(quantity: :desc)
         elsif params[:p_last]
-           @stock_boxes = StockBox.all.sort { |box1, box2| box1.quantity * -1 <=> box2.quantity * -1}
+           @stock_boxes = StockBox.order(quantity: :asc)
         else
           @stock_boxes = StockBox.where("quantity > ?", 0).order("quantity ASC")
         end
