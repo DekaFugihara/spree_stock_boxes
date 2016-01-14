@@ -21,8 +21,8 @@ module Spree
         end
 
         respond_to do |format|
-           format.html # index.html.erb
-           format.json { render json: @stock_boxes }
+          format.html # index.html.erb
+          format.json { render json: @stock_boxes }
         end
       end
       
