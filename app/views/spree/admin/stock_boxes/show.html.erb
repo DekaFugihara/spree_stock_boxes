@@ -1,3 +1,10 @@
+<style type="text/css">
+	@media print {
+		body:not(.print) {
+			visibility: none;
+		}
+	}
+</style>
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 
 <% content_for :page_actions do %>
@@ -10,9 +17,7 @@
 
 <%= image_tag @barcode_path %>
 
-<button>Imprimir</button>
-
-<table>
+<table class="print">
   <thead><tr>
     <th>SKU</th>
     <th>Nome</th>
