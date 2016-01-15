@@ -1,3 +1,15 @@
+<style type="text/css">
+	@media print {
+		body * {
+			visibility: hidden;
+		}
+		#variant-table {
+			visibility: visible;
+			position: absolute;
+		}
+	}
+</style>
+
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
@@ -30,10 +42,10 @@
 
 <%= link_to 'Voltar', admin_stock_boxes_path %>
 
-<script>
+<script type="text/javascript">
 	$(document).ready(function() {
 		$("#print-variants").on("click", function(event) {
-			$("#print-variants").print();
+			document.print();
 		});
 	});
 </script>
