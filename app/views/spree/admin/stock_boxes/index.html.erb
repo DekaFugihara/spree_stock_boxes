@@ -2,6 +2,10 @@
 
 <% content_for :page_actions do %> 
   <li><%= button_link_to "Nova Caixa", new_admin_stock_box_path %></li>
+  <li><%= button_link_to "Ordenar (Mais produtos)", admin_stock_boxes_path(p_first: true) %></li>
+  <li><%= button_link_to "Ordenar (Menos produtos)", admin_stock_boxes_path(p_last: true) %></li>
+  <li><%= button_link_to "Apenas caixas não-vazias", admin_stock_boxes_path %></li>
+  <li><%= button_link_to "Todas as caixas, sem ordem", admin_stock_boxes_path(non_empty: true) %></li>
 <% end %>
 
 <% content_for :page_title do %>

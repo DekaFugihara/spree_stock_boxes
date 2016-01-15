@@ -6,7 +6,9 @@
 
 <%= image_tag @barcode_path %>
 
-<table>
+<button id="print-variants">Imprimir</button>
+
+<table id="variant-table">
   <thead><tr>
     <th>SKU</th>
     <th>Nome</th>
@@ -18,7 +20,7 @@
 	  <tr>
 	    <td><%= variant.sku %></td>
 	    <td><%= link_to variant.name, admin_product_path(variant.product), target: "_blank" %></td>
-			<td><%= variant.count_on_hand %></td>
+		<td><%= variant.count_on_hand %></td>
 	  </tr>
 	</tbody>
 	<% end %>
@@ -27,3 +29,11 @@
 <br />
 
 <%= link_to 'Voltar', admin_stock_boxes_path %>
+
+<script>
+	$(document).ready(function() {
+		$("#print-variants").on("click", function(event) {
+			$("#print-variants").print();
+		});
+	});
+</script>

@@ -9,8 +9,15 @@ module Spree
       # GET /stock_boxes
       # GET /stock_boxes.json
       def index
-        @stock_boxes = StockBox.all
-
+        if params[:non_empty]
+          @stock_boxes = StockBox.all
+        elsif params[:p_first]
+          @stock_boxes = StockBox.find(:all, order: "quantity").reverse
+        elsif params[:p_last]
+           @stock_boxes = StockBox.find(:all, order: "quantity")
+        else
+          @stock_boxes = StockBox.where("quantity > ?", 0).order("quantity ASC")
+        end
         respond_to do |format|
           format.html # index.html.erb
           format.json { render json: @stock_boxes }
@@ -21,8 +28,8 @@ module Spree
       # GET /stock_boxes/1.json
       def show
         @stock_box = StockBox.find(params[:id])
-        @variants = @stock_box.variants
-        
+        @variants = @stock_box.variants.sort_by { |v| [v.count_on_hand, v.sku] }.reverse
+
         @barcode_path = "/tmp/barcode_stockbox_#{@stock_box.number}.png"
         unless FileTest.exist?("#{Rails.root}/public#{@barcode_path}")
           barcode = Barby::Code128A.new(@stock_box.number)
