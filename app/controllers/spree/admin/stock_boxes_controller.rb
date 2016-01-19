@@ -12,9 +12,9 @@ module Spree
         if params[:non_empty]
           @stock_boxes = StockBox.all
         elsif params[:p_first]
-          @stock_boxes = StockBox.find(:all, order: "quantity").reverse
+          @stock_boxes = StockBox.find(:all, order: "variants.count").reverse
         elsif params[:p_last]
-           @stock_boxes = StockBox.find(:all, order: "quantity")
+           @stock_boxes = StockBox.find(:all, order: "variants.count")
         else
           @stock_boxes = StockBox.where("quantity > ?", 0).order("quantity ASC")
         end
