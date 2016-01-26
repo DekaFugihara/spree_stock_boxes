@@ -1,4 +1,18 @@
+<style type="text/css">
+	@media print {
+		body {
+			visibility: hidden;
+		}
+		.print {
+			visibility: visible; position: absolute; margin: 0px; padding: 0px;
+		}
+	}
+</style>
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_actions do %>
+	<li><button onClick="window.print()">Imprimir</button></li>
+<% end %>
 
 <% content_for :page_title do %>
   Peças na Caixa #<%= @stock_box.number %>
@@ -6,9 +20,7 @@
 
 <%= image_tag @barcode_path %>
 
-<button id="print-variants">Imprimir</button>
-
-<table id="variant-table">
+<table class="print">
   <thead><tr>
     <th>SKU</th>
     <th>Nome</th>
@@ -16,24 +28,16 @@
   </tr></thead>
 
 	<% @variants.each do |variant| %>
-	<tbody>
-	  <tr>
-	    <td><%= variant.sku %></td>
-	    <td><%= link_to variant.name, admin_product_path(variant.product), target: "_blank" %></td>
-		<td><%= variant.count_on_hand %></td>
-	  </tr>
-	</tbody>
+		<tbody>
+		  <tr>
+		    <td><%= variant.sku %></td>
+		    <td><%= link_to variant.name, admin_product_path(variant.product), target: "_blank" %></td>
+			<td><%= variant.count_on_hand %></td>
+		  </tr>
+		</tbody>
 	<% end %>
 </table>
 
 <br />
 
 <%= link_to 'Voltar', admin_stock_boxes_path %>
-
-<script>
-	$(document).ready(function() {
-		$("#print-variants").on("click", function(event) {
-			$("#print-variants").print();
-		});
-	});
-</script>
