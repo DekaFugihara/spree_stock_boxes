@@ -4,8 +4,10 @@
 	$("#field2").show();
 	$("#field2 #stock_items").focus();
   $("#show-last-item").html('');
+  $("#effort_starts_at").val("<%= @start_at %>");
 <% else %>
 	$("#field1 .check").html("<img src='/assets/admin/not.png'>");
 	$("#field1 #box_number").select().focus();
   $("#show-last-item").html('');
+  $("#effort_starts_at").val('');
 <% end %>
