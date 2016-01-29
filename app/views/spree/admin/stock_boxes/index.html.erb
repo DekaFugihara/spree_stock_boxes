@@ -23,8 +23,7 @@
     <th>Positiony</th>
     <th>Positionz</th>
     <th>Quantity</th>
-    <th>Items</th>
-    <th>ID</th>
+    <!--<th>Items</th>-->
     <th data-hook="admin_orders_index_header_actions" class="actions"></th>
   </tr></thead>
 
@@ -36,7 +35,7 @@
     <td><%= stock_box.positionY %></td>
     <td><%= stock_box.positionZ %></td>
     <td><%= stock_box.quantity %></td>
-    <td><%= stock_box.total_items %></td>
+    <td><%#= stock_box.total_items %></td>
     <td class='actions align-center' data-hook="admin_orders_index_row_actions">
 			<%= link_to_edit_url edit_admin_stock_box_path(stock_box), :no_text => true %>
 			<%= link_to_delete stock_box, :no_text => true, :url => admin_stock_box_path(stock_box) %>
