@@ -1,5 +1,9 @@
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
-
+<% if Rails.env.development? %>
+  <script> var webPrefix = "localhost:3000/admin/stock_boxes/"; </script>
+<% else %>
+  <script> var webPrefix = "http://retroca.com.br/admin/stock_boxes/"; </script>
+<% end %>
 <% content_for :page_actions do %> 
   <li><%= button_link_to "Nova Caixa", new_admin_stock_box_path %></li>
   <li><%= button_link_to "Ordenar (Mais produtos)", admin_stock_boxes_path(p_first: true) %></li>
@@ -20,6 +24,7 @@
     <th>Positionz</th>
     <th>Quantity</th>
     <th>Items</th>
+    <th>ID</th>
     <th data-hook="admin_orders_index_header_actions" class="actions"></th>
   </tr></thead>
 
@@ -35,8 +40,18 @@
     <td class='actions align-center' data-hook="admin_orders_index_row_actions">
 			<%= link_to_edit_url edit_admin_stock_box_path(stock_box), :no_text => true %>
 			<%= link_to_delete stock_box, :no_text => true, :url => admin_stock_box_path(stock_box) %>
+      <button class="print-contents" id="<%= stock_box.id %>">Imprimir</button>
 		</td>
   </tr>
 </tbody>
 <% end %>
 </table>
+<script>
+  $(document).ready(function() {
+    $(".print-contents").click(function(e) {
+      $.get(webPrefix + $(this).attr("id"), function(data) {
+        alert("Button id: " + $(this).attr("id") + "\n data: " + JSON.stringify(data));
+      });
+    });
+  });
+</script>

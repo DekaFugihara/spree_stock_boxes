@@ -8,7 +8,10 @@
 		}
 	}
 	.print {
-		visibility: visible; position: absolute !important; margin: 0 !important; padding: 0 !important;
+		visibility: visible; position: absolute !important; margin: 0 !important; padding: 0 !important; top: 0;
+	}
+	.print > *:not(th, tr) {
+		padding: 0; margin: 0;
 	}
 </style>
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
