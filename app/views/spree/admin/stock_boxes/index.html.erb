@@ -33,7 +33,7 @@
     <td><%= stock_box.positionX %></td>
     <td><%= stock_box.positionY %></td>
     <td><%= stock_box.positionZ %></td>
-    <td><%= stock_box.quantity %></td>
+    <td><%= stock_box.variants.count %></td>
     <!--<td><%#= stock_box.total_items %></td>-->
     <td class='actions align-center' data-hook="admin_orders_index_row_actions">
 			<%= link_to_edit_url edit_admin_stock_box_path(stock_box), :no_text => true %>
@@ -46,16 +46,19 @@
 </table>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://github.com/erikzaadi/jQueryPlugins/blob/master/jQuery.printElement/jquery.printElement.min.js"></script>
 <script>
   $(document).ready(function() {
+    var 
     $(".print-contents").on("click", function(e) {
       e.preventDefault();
       console.log("webPrefix = " + webPrefix);
       var buttonID = this.id;
       console.log("Button id: " + buttonID);
+      $("body").printElement();
       $.getJSON(webPrefix + buttonID + ".json", function(json) {
         console.log(webPrefix + buttonID);
-        json.forEach(function(hash) {
+        json["variants"].forEach(function(variant) {
           console.log(hash.id);
         });
       });
