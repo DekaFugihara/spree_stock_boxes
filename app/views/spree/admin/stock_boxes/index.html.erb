@@ -51,8 +51,9 @@
     $(".print-contents").on("click", function(e) {
       e.preventDefault();
       console.log("webPrefix = " + webPrefix);
-      console.log("Button id: " + $(this).attr("id"));
-      $.getJSON(webPrefix + $(this).attr("id"), function(json) {
+      var buttonID = this.id;
+      console.log("Button id: " + buttonID);
+      $.getJSON(webPrefix + buttonID, function(json) {
         json.forEach(function(hash) {
           console.log(hash.id);
         });
