@@ -40,7 +40,7 @@ module Spree
         
         respond_to do |format|
           format.html # show.html.erb
-          format.json { render json: @stock_box }
+          format.json { render json: @stock_box, @variants }
         end
       end
 

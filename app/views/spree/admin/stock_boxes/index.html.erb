@@ -53,7 +53,8 @@
       console.log("webPrefix = " + webPrefix);
       var buttonID = this.id;
       console.log("Button id: " + buttonID);
-      $.getJSON(webPrefix + buttonID, function(json) {
+      $.getJSON(webPrefix + buttonID + ".json", function(json) {
+        console.log(webPrefix + buttonID);
         json.forEach(function(hash) {
           console.log(hash.id);
         });
