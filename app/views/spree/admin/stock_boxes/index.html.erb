@@ -49,18 +49,15 @@
 <script src="https://github.com/erikzaadi/jQueryPlugins/blob/master/jQuery.printElement/jquery.printElement.min.js"></script>
 <script>
   $(document).ready(function() {
-    var 
+    
     $(".print-contents").on("click", function(e) {
       e.preventDefault();
       console.log("webPrefix = " + webPrefix);
       var buttonID = this.id;
       console.log("Button id: " + buttonID);
-      $("body").printElement();
+      //$("body").printElement();
       $.getJSON(webPrefix + buttonID + ".json", function(json) {
-        console.log(webPrefix + buttonID);
-        json["variants"].forEach(function(variant) {
-          console.log(hash.id);
-        });
+        alert(json.stock_box.stock_box.id);
       });
     });
   });
