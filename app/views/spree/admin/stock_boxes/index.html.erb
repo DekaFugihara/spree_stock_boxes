@@ -1,6 +1,6 @@
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 <% if Rails.env.development? %>
-  <script> var webPrefix = "localhost:3000/admin/stock_boxes/"; </script>
+  <script> var webPrefix = "http://localhost:3000/admin/stock_boxes/"; </script>
 <% else %>
   <script> var webPrefix = "http://retroca.com.br/admin/stock_boxes/"; </script>
 <% end %>
@@ -26,9 +26,8 @@
     <!--<th>Items</th>-->
     <th data-hook="admin_orders_index_header_actions" class="actions"></th>
   </tr></thead>
-
-<% @stock_boxes.each do |stock_box| %>
 <tbody>
+<% @stock_boxes.each do |stock_box| %>
   <tr>
     <td><%= link_to stock_box.number, admin_stock_box_path(stock_box) %></td>
     <td><%= stock_box.positionX %></td>
@@ -42,10 +41,13 @@
       <button class="print-contents" id="<%= stock_box.id %>">Imprimir</button>
 		</td>
   </tr>
-</tbody>
 <% end %>
+<tbody>
 </table>
-<script>
+
+<script type="text/javascript">
+
+  console.log("webPrefix = " + webPrefix);
   $(document).ready(function() {
     $(".print-contents").on("click", function(e) {
       e.preventDefault();
@@ -58,4 +60,5 @@
       });
     });
   });
+
 </script>
