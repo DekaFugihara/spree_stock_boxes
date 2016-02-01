@@ -49,6 +49,7 @@
   $(document).ready(function() {
     $(".print-contents").on("click", function(e) {
       e.preventDefault();
+      console.log("aaa");
       $.getJSON(webPrefix + $(this).attr("id"), function(json) {
         alert("Button id: " + $(this).attr("id"));// + "\n data: " + JSON.stringify(data));
         json.forEach(function(hash) {
