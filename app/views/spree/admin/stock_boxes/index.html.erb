@@ -47,15 +47,12 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
-
-  console.log("webPrefix = " + webPrefix);
   $(document).ready(function() {
-    console.log("webPrefix 333 = " + webPrefix);
     $(".print-contents").on("click", function(e) {
       e.preventDefault();
-      console.log("aaa");
+      console.log("webPrefix = " + webPrefix);
+      console.log("Button id: " + $(this).attr("id"));
       $.getJSON(webPrefix + $(this).attr("id"), function(json) {
-        alert("Button id: " + $(this).attr("id"));// + "\n data: " + JSON.stringify(data));
         json.forEach(function(hash) {
           console.log(hash.id);
         });
