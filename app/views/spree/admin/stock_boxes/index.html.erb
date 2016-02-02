@@ -50,14 +50,10 @@
 <script src="https://raw.githubusercontent.com/erikzaadi/jQuery.printElement/master/src/jquery.printelement.js"></script>
 <script>
   $(document).ready(function() {
-    
+    $.getScript("https://raw.githubusercontent.com/erikzaadi/jQuery.printElement/master/src/jquery.printelement.js");
     $(".print-contents").on("click", function(e) {
       e.preventDefault();
-      console.log("webPrefix = " + webPrefix);
       var buttonID = this.id;
-      console.log("Button id: " + buttonID);
-      //$("body").printElement();
-      //var itemsTotal = 0;
       var index = 0;
       var tableRows = "";
       var tableHeaders = "";
@@ -68,12 +64,10 @@
             tableRows += "<tr>";
             tableRows += "<td>" + variant.variant.sku + "</td><td>" + json.variant_names[index] + "</td><td>" + variant.variant.count_on_hand + "</td>";
             tableRows += "</tr>";
-            //itemsTotal += 1;
           }
           index += 1;
         });
         tableRows += "</table>";
-        alert(tableHeaders + tableRows);
         $("#print").show();
         $("#print").html(tableHeaders + tableRows);
         $("#print").printElement();
