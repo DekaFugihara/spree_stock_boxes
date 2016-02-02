@@ -44,6 +44,7 @@
 <% end %>
 <tbody>
 </table>
+<div id="print"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://github.com/erikzaadi/jQueryPlugins/blob/master/jQuery.printElement/jquery.printElement.min.js"></script>
@@ -61,8 +62,7 @@
       var tableRows = "";
       var tableHeaders = "";
       $.getJSON(webPrefix + buttonID + ".json", function(json) {
-        alert(json.stock_box.number);
-        tableHeaders += "<div id='print'><h3>Tabela # " + json.stock_box.number + "</h3><table><th>SKU</th><th>NOME</th><th>QTE NA CAIXA</th>";
+        tableHeaders += "<h3>Tabela # " + json.stock_box.stock_box.number + "</h3><table><th>SKU</th><th>NOME</th><th>QTE NA CAIXA</th>";
         json.variants.forEach(function(variant) {
           if (variant.variant.count_on_hand > 0) {
             tableRows += "<tr>";
@@ -74,6 +74,8 @@
         });
         tableRows += "</table>";
         alert(tableHeaders + tableRows);
+        $("#print").html(tableHeaders + tableRows);
+        $("#print").printElement();
       });
     });
   });
