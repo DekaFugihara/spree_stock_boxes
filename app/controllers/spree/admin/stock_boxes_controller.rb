@@ -29,6 +29,10 @@ module Spree
       def show
         @stock_box = StockBox.find(params[:id])
         @variants = @stock_box.variants.sort_by { |v| [v.count_on_hand, v.sku] }.reverse
+        @variant_names = []
+        @variants.each do |variant|
+          @variant_names.push(variant.name)
+        end
 
         @barcode_path = "/tmp/barcode_stockbox_#{@stock_box.number}.png"
         unless FileTest.exist?("#{Rails.root}/public#{@barcode_path}")
@@ -40,7 +44,7 @@ module Spree
         
         respond_to do |format|
           format.html # show.html.erb
-          format.json { render json: { stock_box: @stock_box, variants: @variants } }
+          format.json { render json: { stock_box: @stock_box, variants: @variants, variant_names: @variant_names } }
         end
       end
 

@@ -56,8 +56,24 @@
       var buttonID = this.id;
       console.log("Button id: " + buttonID);
       //$("body").printElement();
+      //var itemsTotal = 0;
+      var index = 0;
+      var tableRows = "";
+      var tableHeaders = "";
       $.getJSON(webPrefix + buttonID + ".json", function(json) {
-        alert(json.stock_box.stock_box.id);
+        alert(json.stock_box.number);
+        tableHeaders += "<div id='print'><h3>Tabela # " + json.stock_box.number + "</h3><table><th>SKU</th><th>NOME</th><th>QTE NA CAIXA</th>";
+        json.variants.forEach(function(variant) {
+          if (variant.variant.count_on_hand > 0) {
+            tableRows += "<tr>";
+            tableRows += "<td>" + variant.variant.sku + "</td><td>" + json.variant_names[index] + "</td><td>" + variant.variant.count_on_hand + "</td>";
+            tableRows += "</tr>";
+            //itemsTotal += 1;
+          }
+          index += 1;
+        });
+        tableRows += "</table>";
+        alert(tableHeaders + tableRows);
       });
     });
   });
