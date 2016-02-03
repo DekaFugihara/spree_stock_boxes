@@ -1,3 +1,4 @@
+<style type="text/css" media="print"> *:not(#print) { display: none; } </style>
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 <% if Rails.env.development? %>
   <script> var webPrefix = "http://localhost:3000/admin/stock_boxes/"; </script>
@@ -235,7 +236,8 @@
         tableRows += "</table>";
         $("#print").show();
         $("#print").html(tableHeaders + tableRows);
-        $("#print").printElement();
+        //$("#print").printElement();
+        window.print();
         $("#print").hide();
       });
     });
