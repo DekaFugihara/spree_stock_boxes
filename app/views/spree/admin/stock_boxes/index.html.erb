@@ -50,7 +50,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
   $(document).ready(function() {
-    $.getScript("https://raw.githubusercontent.com/erikzaadi/jQuery.printElement/master/src/jquery.printelement.js");
+    $.getScript("http://cdn.rawgit.com/erikzaadi/jQuery.printElement/master/src/jquery.printelement.js");
 
     $(".print-contents").on("click", function(e) {
       e.preventDefault();
@@ -71,7 +71,7 @@
         tableRows += "</table>";
         $("#print").html(tableHeaders + tableRows);
         $("#print").show();
-        $("#print-iframe").get(0).contentWindow.print();
+        $("#print").get(0).contentWindow.print();
         $("#print").hide();
       });
     });
