@@ -4,8 +4,14 @@
 			visibility: hidden;
 		}
 		.print {
-			visibility: visible; position: absolute; margin: 0px; padding: 0px;
+			visibility: visible; position: absolute !important; margin: 0 !important; padding: 0 !important;
 		}
+	}
+	.print {
+		visibility: visible; position: absolute !important; margin: 0 !important; padding: 0 !important; top: 0;
+	}
+	.print > *:not(th, tr) {
+		padding: 0; margin: 0;
 	}
 </style>
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
@@ -24,7 +30,7 @@
   <thead><tr>
     <th>SKU</th>
     <th>Nome</th>
-		<th>Estoque</th>
+	<th>Estoque</th>
   </tr></thead>
 
 	<% @variants.each do |variant| %>

@@ -1,5 +1,10 @@
+<style type="text/css" media="print"> /* *:not(#print) { display: none; } */</style>
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
-
+<% if Rails.env.development? %>
+  <script> var webPrefix = "http://localhost:3000/admin/stock_boxes/"; </script>
+<% else %>
+  <script> var webPrefix = "http://retroca.com.br/admin/stock_boxes/"; </script>
+<% end %>
 <% content_for :page_actions do %> 
   <li><%= button_link_to "Nova Caixa", new_admin_stock_box_path %></li>
   <li><%= button_link_to "Ordenar (Mais produtos)", admin_stock_boxes_path(p_first: true) %></li>
@@ -19,24 +24,58 @@
     <th>Positiony</th>
     <th>Positionz</th>
     <th>Quantity</th>
-    <th>Items</th>
+    <!--<th>Items</th>-->
     <th data-hook="admin_orders_index_header_actions" class="actions"></th>
   </tr></thead>
-
-<% @stock_boxes.each do |stock_box| %>
 <tbody>
+<% @stock_boxes.each do |stock_box| %>
   <tr>
     <td><%= link_to stock_box.number, admin_stock_box_path(stock_box) %></td>
     <td><%= stock_box.positionX %></td>
     <td><%= stock_box.positionY %></td>
     <td><%= stock_box.positionZ %></td>
-    <td><%= stock_box.quantity %></td>
-    <td><%= stock_box.total_items %></td>
+    <td><%= stock_box.variants.count %></td>
+    <!--<td><%#= stock_box.total_items %></td>-->
     <td class='actions align-center' data-hook="admin_orders_index_row_actions">
 			<%= link_to_edit_url edit_admin_stock_box_path(stock_box), :no_text => true %>
 			<%= link_to_delete stock_box, :no_text => true, :url => admin_stock_box_path(stock_box) %>
+      <button class="print-contents" id="<%= stock_box.id %>">Imprimir</button>
 		</td>
   </tr>
-</tbody>
 <% end %>
+<tbody>
 </table>
+<div id="print"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $.getScript("http://cdn.rawgit.com/erikzaadi/jQuery.printElement/master/src/jquery.printelement.js");
+
+    $(".print-contents").on("click", function(e) {
+      e.preventDefault();
+      var buttonID = this.id;
+      var index = 0;
+      var tableRows = "";
+      var tableHeaders = "";
+      $.getJSON(webPrefix + buttonID + ".json", function(json) {
+        tableHeaders += "<h3>Tabela # " + json.stock_box.stock_box.number + "</h3><table><th>SKU</th><th>NOME</th><th>QTE NA CAIXA</th>";
+        json.variants.forEach(function(variant) {
+          if (variant.variant.count_on_hand > 0) {
+            tableRows += "<tr>";
+            tableRows += "<td>" + variant.variant.sku + "</td><td>" + json.variant_names[index] + "</td><td>" + variant.variant.count_on_hand + "</td>";
+            tableRows += "</tr>";
+          }
+          index += 1;
+        });
+        tableRows += "</table>";
+        $("#print").html(tableHeaders + tableRows);
+        $("#print").show();
+        $("#print").printElement();
+        //$("#print").get(0).contentWindow.print();
+        setTimeout(100, function() { $("#print").hide() } );
+      });
+    });
+  });
+
+</script>
