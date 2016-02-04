@@ -200,8 +200,9 @@ module Spree
           end_at = DateTime.now
           activity = Spree::Activity.find_by_name("Estoque")
           task = Spree::Task.where(name:"Picking").where(activity_id:activity.id).first
-          Spree::Effort.create(user_id: registerer_id, task_id: task.id, object_id: @box.id, object_type: "Spree::StockBox", description: "Estocando produtos na caixa #{@box.number}", amount: total_registered_items.to_f, started_at: start_at, completed_at: end_at)
-
+          effort = Spree::Effort.create(user_id: registerer_id, task_id: task.id, object_id: @box.id, object_type: "Spree::StockBox", description: "Estocando produtos na caixa #{@box.number}", quantity: total_registered_items.to_f, started_at: start_at, completed_at: end_at)
+          effort.save
+                    
           respond_to do |format|
             format.js { render "page_reload" }
           end
