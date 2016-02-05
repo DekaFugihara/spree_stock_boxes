@@ -4,6 +4,10 @@ module Spree
     before_validation :generate_box_number, on: :create
     has_many :variants
 
+    def total_items
+      variants.collect{ |v| v.count_on_hand }.reduce(:+)
+    end
+
     def generate_box_number
       alphabet = ('A'..'Z').to_a
       integer = 0

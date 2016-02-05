@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'barby'
 require 'barby/barcode/code_128'
 require 'barby/outputter/png_outputter'
@@ -113,10 +114,10 @@ module Spree
       end
 
       def stocking_check
-        
         @box = StockBox.find_by_number(params[:box_number])
         if params[:field_action] == "open"
-          check = "open"  
+          check = "open"
+          @start_at = DateTime.now
           respond_to do |format|
             format.js { render "box_open" }
           end
@@ -183,11 +184,25 @@ module Spree
 
         if params[:field_action] == "close"
           check = "close"
+
+          registerer_id = spree_current_user.id
+          total_registered_items = 0
+
           registered_items = params[:registered_items]
           registered_items.split(",").each do |v|
             variant = Spree::Variant.find_by_sku(v)
             variant.update_column(:stock_box_id, @box.id)
+            variant.update_column(:stocked_by_id, registerer_id)
+            total_registered_items += 1
           end
+
+          start_at = params[:effort_starts_at]
+          end_at = DateTime.now
+          activity = Spree::Activity.find_by_name("Estoque")
+          task = Spree::Task.where(name:"Picking").where(activity_id:activity.id).first
+          effort = Spree::Effort.create(user_id: registerer_id, task_id: task.id, object_id: @box.id, object_type: "Spree::StockBox", description: "Estocando produtos na caixa #{@box.number}", quantity: total_registered_items.to_f, started_at: start_at, completed_at: end_at)
+          effort.save
+                    
           respond_to do |format|
             format.js { render "page_reload" }
           end

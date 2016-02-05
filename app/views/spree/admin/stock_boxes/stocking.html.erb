@@ -20,12 +20,15 @@
 		</div>
 
 		<div class="form-row clearfix" id="field2" style="display:none;">
-			<h6>Escaneie as peças a serem guardadas</h6>
-			<%= form_tag(stocking_check_admin_stock_boxes_path, method: :post) do %>	
+			<%= form_tag(stocking_check_admin_stock_boxes_path, method: :post) do %>
 				<%= hidden_field_tag 'field_action', 'insert' %>
 				<%= hidden_field_tag 'box_number', '', class: "box" %>
 				<%= hidden_field_tag 'registered_items', '', class: "registered_items" %>
 				<%= hidden_field_tag 'box_number', '', class: "box" %>
+				<h6>Registrador:</h6>
+				<%= text_field_tag 'registerer', spree_current_user.firstname, :disabled=>true %>
+				<br /><br />
+				<h6>Escaneie as peças a serem guardadas</h6>
 				<%= text_area_tag 'stock_items', '', rows: 10, cols: 50, placeholder: 'SKU das peças a serem armazenadas' %>
 				<span class="check"></span>
 				<br /><br />
@@ -38,6 +41,7 @@
 				<%= hidden_field_tag 'field_action', 'close' %>
 				<%= hidden_field_tag 'box_number', '', class: "box" %>
 				<%= hidden_field_tag 'registered_items', '', class: "registered_items" %>
+				<%= hidden_field_tag 'effort_starts_at','' %>
 				<span class="check"></span>
 			<% end %>	
 		</div>
@@ -60,7 +64,7 @@ $("#field1 .check").html('');
 
 
 $("form").live("change", function(){
-	console.log("Form changed");
+	console.log("Form #" + $(this).attr("id") + " changed");
 	$("#show-last-item").html('<%= image_tag "/assets/admin/loading.gif", size: "29x29" %>');
 	$.post($(this).attr('action'), $(this).serialize(), null, "script");
 });

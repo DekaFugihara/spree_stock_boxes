@@ -3,7 +3,7 @@ Spree::Product.class_eval do
   before_save :insert_into_stock_box
   attr_accessible :stock_box_number
   attr_accessor :stock_box_number
-  
+
   def stock_box_number
     master.stock_box.number if master.stock_box
   end
