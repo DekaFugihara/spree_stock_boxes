@@ -3,7 +3,7 @@
 <% if Rails.env.development? %>
   <script> var webPrefix = "https://localhost:3000/admin/stock_boxes/"; </script>
 <% else %>
-  <script> var webPrefix = "https://retroca.com.br/admin/stock_boxes/"; </script>
+  <script> var webPrefix = "https://www.retroca.com.br/admin/stock_boxes/"; </script>
 <% end %>
 <% content_for :page_actions do %> 
   <li><%= button_link_to "Nova Caixa", new_admin_stock_box_path %></li>
