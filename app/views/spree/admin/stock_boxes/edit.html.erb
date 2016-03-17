@@ -1,5 +1,9 @@
-<h1>Editando caixa de estoque</h1>
+<% content_for :page_actions do %> 
+<li><%= button_link_to "Voltar", admin_stock_boxes_path, :icon => 'icon-arrow-left' %></li>
+<% end %>
+
+<% content_for :page_title do %>
+<h1>Editando caixa de estoque #<%= @stock_box.number %></h1>
+<% end %>
 
 <%= render 'form' %>
-
-<%= link_to 'Voltar', admin_stock_boxes_path %>

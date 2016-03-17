@@ -1,6 +1,6 @@
 module Spree
   class StockBox < ActiveRecord::Base
-    attr_accessible :number, :positionX, :positionY, :positionZ, :quantity
+    attr_accessible :number, :positionX, :positionY, :positionZ, :quantity, :last_check_at
     before_validation :generate_box_number, on: :create
     has_many :variants
 

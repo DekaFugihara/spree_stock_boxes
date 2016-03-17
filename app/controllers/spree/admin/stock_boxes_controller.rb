@@ -11,13 +11,16 @@ module Spree
       # GET /stock_boxes.json
       def index
         params[:order_by] ||= "name"
+        per_page = 20
+        params[:page] ||= "1"
+
         @stock_boxes = case params[:order_by]
-        when "nonempty"
-          StockBox.where("quantity > ?", 0).order(:number)
-        when "quantity"
-          StockBox.all.sort_by{ |b| b.total_items }.reverse
-        else
-          StockBox.order(:number)
+          when "nonempty"
+            StockBox.where("quantity > ?", 0).order(:number).page(params[:page]).per(per_page)
+          when "quantity"
+            Kaminari.paginate_array(StockBox.all.sort_by{ |b| b.total_items }.reverse).page(params[:page]).per(per_page)
+          else
+            StockBox.order(:number).page(params[:page]).per(per_page)
         end
 
         respond_to do |format|
