@@ -10,15 +10,16 @@ module Spree
       # GET /stock_boxes
       # GET /stock_boxes.json
       def index
-        if params[:non_empty]
-          @stock_boxes = StockBox.all
-        elsif params[:p_first]
-          @stock_boxes = StockBox.find(:all, order: "variants.count").reverse
-        elsif params[:p_last]
-           @stock_boxes = StockBox.find(:all, order: "variants.count")
+        params[:order_by] ||= "name"
+        @stock_boxes = case params[:order_by]
+        when "nonempty"
+          StockBox.where("quantity > ?", 0).order(:number)
+        when "quantity"
+          StockBox.all.sort_by{ |b| b.total_items }.reverse
         else
-          @stock_boxes = StockBox.where("quantity > ?", 0).order("quantity ASC")
+          StockBox.order(:number)
         end
+
         respond_to do |format|
           format.html # index.html.erb
           format.json { render json: @stock_boxes }
@@ -43,9 +44,15 @@ module Spree
           end
         end
         
-        respond_to do |format|
-          format.html # show.html.erb
-          format.json { render json: { stock_box: @stock_box, variants: @variants, variant_names: @variant_names } }
+        if params[:print]
+          respond_to do |format|
+            format.html { render action: "show", layout: "spree/layouts/blank" }
+          end
+        else
+          respond_to do |format|
+            format.html # show.html.erb
+            format.json { render json: { stock_box: @stock_box, variants: @variants, variant_names: @variant_names } }
+          end
         end
       end
 

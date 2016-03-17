@@ -1,19 +1,29 @@
+<% content_for :head do %>
 <style type="text/css">
-	@media print {
-		body {
-			visibility: hidden;
-		}
-		.print {
-			visibility: visible; position: absolute !important; margin: 0 !important; padding: 0 !important;
-		}
+/*@media print {
+	body {
+		visibility: hidden;
 	}
-	.print {
-		visibility: visible; position: absolute !important; margin: 0 !important; padding: 0 !important; top: 0;
+	h1.page-title {
+		visibility: visible;
+		position:absolute !important;
+		margin:0 !important;
+		top:0;
 	}
-	.print > *:not(th, tr) {
-		padding: 0; margin: 0;
+	table {
+		visibility: visible; position: absolute !important; margin: 0 !important; padding: 0 !important; top: 60px;
 	}
+}
+table > *:not(th, tr) {
+	padding: 0; margin: 0;
+}*/
+ul li {
+	display: inline-block;
+	padding-left:30px;
+}
 </style>
+<% end %>
+
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 
 <% content_for :page_actions do %>
@@ -24,26 +34,60 @@
   Peças na Caixa #<%= @stock_box.number %>
 <% end %>
 
+<% if params[:print] %>
+<h2>Peças na Caixa #<%= @stock_box.number %></h2>
+<% else %>
 <%= image_tag @barcode_path %>
+<% end %>
 
-<table class="print">
-  <thead><tr>
-    <th>SKU</th>
-    <th>Nome</th>
-	<th>Estoque</th>
-  </tr></thead>
+<table>
+  <thead>
+	<tr>
+		<th>SKU</th>
+		<th>Nome</th>
+		<th>Estoque</th>
+	</tr>
+  </thead>
 
 	<% @variants.each do |variant| %>
 		<tbody>
 		  <tr>
 		    <td><%= variant.sku %></td>
 		    <td><%= link_to variant.name, admin_product_path(variant.product), target: "_blank" %></td>
-			<td><%= variant.count_on_hand %></td>
+			<td>
+				<%= variant.count_on_hand %>
+				<% if variant.count_on_hand == 0 %>
+					<%= '(R)' unless variant.available? || variant.product.sold? %>
+					<%= '(V)' if variant.product.sold? %>
+					<%= '(P)' if variant.lost? %>
+				<% end %>
+			</td>
 		  </tr>
 		</tbody>
 	<% end %>
+	<tfoot>
+		<tr>
+			<td colspan="3">
+				<ul>
+					<li>(R) = Reservado</li>
+					<li>(V) = Vendido</li>
+					<li>(P) = Perdido</li>
+				</ul>
+			</td>
+		</tr>
+	</tfoot>
 </table>
 
 <br />
 
+
+
+<br />
+
 <%= link_to 'Voltar', admin_stock_boxes_path %>
+
+<% if params[:print] %>
+<script type="text/javascript">
+window.print()
+</script>
+<% end %>

@@ -5,7 +5,11 @@ module Spree
     has_many :variants
 
     def total_items
-      variants.collect{ |v| v.count_on_hand }.reduce(:+)
+      if variants.size > 0
+        variants.collect{ |v| v.count_on_hand }.reduce(:+)
+      else
+        0
+      end
     end
 
     def generate_box_number
