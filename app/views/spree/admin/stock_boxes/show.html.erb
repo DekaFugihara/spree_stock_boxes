@@ -47,11 +47,7 @@ ul li {
 		    <td><%= link_to variant.name, admin_product_path(variant.product), target: "_blank" %></td>
 			<td>
 				<%= variant.count_on_hand %>
-				<% if variant.count_on_hand == 0 %>
-					<%= '(R)' unless variant.available? || variant.product.sold? %>
-					<%= '(V)' if variant.product.sold? %>
-					<%= '(P)' if variant.lost? %>
-				<% end %>
+				<%= "(#{variant.stock_state[0]})" if variant.count_on_hand == 0 %>
 			</td>
 		  </tr>
 		</tbody>

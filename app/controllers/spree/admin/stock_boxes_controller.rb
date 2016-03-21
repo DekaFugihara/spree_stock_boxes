@@ -33,7 +33,8 @@ module Spree
       # GET /stock_boxes/1.json
       def show
         @stock_box = StockBox.find(params[:id])
-        @variants = @stock_box.variants.sort_by { |v| [v.count_on_hand, v.sku] }.reverse
+        stock_state_priority = ["Estoque","Reservado","Perdido","Vendido"].reverse
+        @variants = @stock_box.variants.sort_by { |v| [v.count_on_hand, stock_state_priority.index(v.stock_state)] }.reverse
         @variant_names = []
         @variants.each do |variant|
           @variant_names.push(variant.name)
